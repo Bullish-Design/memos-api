@@ -53,7 +53,7 @@ def sync_examples():
     print("\n=== Sync Client Examples ===")
 
     # Custom configuration
-    config = MemosClientConfig(base_url="http://localhost:5232", timeout=60.0)
+    config = MemosClientConfig(base_url="http://tower:5232", timeout=60.0)
 
     with SyncMemosClient(config) as client:
         # Create memo

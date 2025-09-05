@@ -9,6 +9,9 @@ import os
 from typing import Optional
 
 from pydantic import BaseModel, Field, ConfigDict
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
 class MemosClientConfig(BaseModel):
