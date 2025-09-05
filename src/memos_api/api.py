@@ -1,6 +1,7 @@
 """
 Memotic API application
 """
+
 from __future__ import annotations
 
 from contextlib import asynccontextmanager
@@ -9,6 +10,7 @@ from typing import AsyncGenerator
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic_settings import BaseSettings
+from pydantic import BaseModel, ConfigDict
 
 from .routers.activities import ActivityRouter
 from .routers.attachments import AttachmentRouter
@@ -27,9 +29,11 @@ class AppSettings(BaseSettings):
     api_prefix: str = "/api/v1"
     cors_origins: list[str] = ["http://tower:3000", "http://tower:8080"]
 
-    class Config:
-        env_file = ".env"
-        extra = "ignore"
+    model_config = ConfigDict(extra="ignore", env_file=".env")
+
+    # class Config:
+    #    env_file = ".env"
+    #    extra = "ignore"
 
 
 @asynccontextmanager
@@ -82,8 +86,12 @@ class MemosAPI:
         user_router = UserRouter(self.storage.users)
 
         # Register routers
-        self.app.include_router(activity_router.router, prefix=prefix, tags=["activities"])
-        self.app.include_router(attachment_router.router, prefix=prefix, tags=["attachments"])
+        self.app.include_router(
+            activity_router.router, prefix=prefix, tags=["activities"]
+        )
+        self.app.include_router(
+            attachment_router.router, prefix=prefix, tags=["attachments"]
+        )
         self.app.include_router(auth_router.router, prefix=prefix, tags=["auth"])
         self.app.include_router(memo_router.router, prefix=prefix, tags=["memos"])
         self.app.include_router(user_router.router, prefix=prefix, tags=["users"])
