@@ -3,7 +3,8 @@
 # /// script
 # requires-python = ">=3.11"
 # dependencies = [
-#     "memos-api @ https://github.com/Bullish-Design/memos-api.git"
+#     "memos-api @ https://github.com/Bullish-Design/memos-api.git",
+#     "python-dotenv",
 # ]
 # ///
 """
@@ -20,6 +21,9 @@ from memos_api import (
     quick_memo_sync,
     quick_memo,
 )
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
 async def async_examples():
